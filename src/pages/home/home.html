@@ -5,30 +5,31 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card>
-      <ion-card-header>
-        Bar Chart
-      </ion-card-header>
-      <ion-card-content>
-        <canvas #barCanvas></canvas>
-      </ion-card-content>
-    </ion-card>
- 
-    <ion-card>
-      <ion-card-header>
-        Doughnut Chart
-      </ion-card-header>
-      <ion-card-content>
-        <canvas #doughnutCanvas></canvas>
-      </ion-card-content>
-    </ion-card>
- 
-    <ion-card>
-      <ion-card-header>
-        Line Chart
-      </ion-card-header>
-      <ion-card-content>
-        <canvas #lineCanvas></canvas>
-      </ion-card-content>
-    </ion-card>
+  <form #expenseForm="ngForm" class="editForm" novalidate>
+
+    <ion-list>
+      <ion-item>
+        {{category | json}}
+        <ion-label floating>Category</ion-label>
+        <ion-select name="category" required [(ngModel)]="expenseDetails.expensecategory">
+          <ion-option *ngFor="let cat of category" [value]="cat.name">{{cat.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Date</ion-label>
+        <ion-datetime name="date" required displayFormat="MMM DD YYYY" [(ngModel)]="expenseDetails.date"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Details</ion-label>
+        <ion-input name="details" required type="text" [(ngModel)]="expenseDetails.details"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Amount</ion-label>
+        <ion-input name="amount" type="number" [(ngModel)]="expenseDetails.amount"></ion-input>
+      </ion-item>
+      <div>
+        <button ion-button block type="submit" [disabled]="!expenseForm.valid" (click)="addExpense(expenseDetails)">Submit</button>
+      </div>
+    </ion-list>
+  </form>
 </ion-content>
